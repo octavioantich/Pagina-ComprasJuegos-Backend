@@ -1,0 +1,669 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Taco gaming",
+        "description": "Apis",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "https://code-connoisseurs-laravel.vercel.app/rest"
+        }
+    ],
+    "paths": {
+        "/categorias": {
+            "get": {
+                "tags": [
+                    "Categorias"
+                ],
+                "summary": "Listado de las categorias de los juegos",
+                "operationId": "00b434caf51a4ab45585c4bda56d9b28",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "rows": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "number",
+                                                        "example": "1"
+                                                    },
+                                                    "nombre": {
+                                                        "type": "string",
+                                                        "example": "Aderson Felix"
+                                                    },
+                                                    "descripcion": {
+                                                        "type": "string",
+                                                        "example": "Jara Lazaro"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/categorias/{id}": {
+            "get": {
+                "tags": [
+                    "Categorias"
+                ],
+                "summary": "Mostrar la información de una categoria",
+                "operationId": "aa26f53d1c6df2adcf9cef10d1a9964b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "number",
+                                            "example": 1
+                                        },
+                                        "nombre": {
+                                            "type": "string",
+                                            "example": "Aderson Felix"
+                                        },
+                                        "descripcion": {
+                                            "type": "string",
+                                            "example": "Jara Lazaro"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "La categoria no existe",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "La categoria no existe"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/compras": {
+            "post": {
+                "tags": [
+                    "Compras"
+                ],
+                "summary": "Realiza una nueva compra y la almacena en la base de datos.",
+                "operationId": "7a60fdd9bafdd61c22099c5d68b88da6",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "idUsuario",
+                                    "fecha_compra",
+                                    "juegosComprados"
+                                ],
+                                "properties": {
+                                    "idUsuario": {
+                                        "description": "ID del usuario que realiza la compra.",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "fecha_compra": {
+                                        "description": "Fecha y hora en la que se realizó la compra.",
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2023-05-12 16:30:00"
+                                    },
+                                    "juegosComprados": {
+                                        "description": "Lista de juegos comprados.",
+                                        "type": "array",
+                                        "items": {
+                                            "required": [
+                                                "idJuego",
+                                                "precioDelMomento"
+                                            ],
+                                            "properties": {
+                                                "idJuego": {
+                                                    "description": "ID del juego comprado.",
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "precioDelMomento": {
+                                                    "description": "Precio del juego en el momento de la compra.",
+                                                    "type": "number",
+                                                    "example": "29.99"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "example": "[{'idJuego': 17, 'precioDelMomento': 53.31}]"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Compra realizada correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Compra realizada correctamente"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Errores de validación",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "errors": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            },
+                                            "example": "['La compra no puede ser realizada correctamente']"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/desarrolladores": {
+            "get": {
+                "tags": [
+                    "Desarrolladores"
+                ],
+                "summary": "Listado de los desarrolladores",
+                "operationId": "e8929bf4c80293c68e3d7821acabdf3f",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "rows": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "number",
+                                                        "example": "1"
+                                                    },
+                                                    "nombre": {
+                                                        "type": "string",
+                                                        "example": "Ubisoft"
+                                                    },
+                                                    "descripcion": {
+                                                        "type": "string",
+                                                        "example": "Desarrollador de videojuegos"
+                                                    },
+                                                    "pais": {
+                                                        "type": "string",
+                                                        "example": "Francia"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/desarrolladores/{id}": {
+            "get": {
+                "tags": [
+                    "Desarrolladores"
+                ],
+                "summary": "Mostrar la información de un desarrollador",
+                "operationId": "b720b8276ca125b7192a21ecc9f80ad9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "number",
+                                            "example": 1
+                                        },
+                                        "nombre": {
+                                            "type": "string",
+                                            "example": "Desarrollador A"
+                                        },
+                                        "descripcion": {
+                                            "type": "string",
+                                            "example": "Descripcion del Desarrollador A"
+                                        },
+                                        "pais": {
+                                            "type": "string",
+                                            "example": "País A"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "El desarrollador no existe",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "El desarrollador no existe"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/juegos": {
+            "get": {
+                "tags": [
+                    "Juegos"
+                ],
+                "summary": "Listado de los juegos",
+                "operationId": "7df5fdbae3f1f784695d893a792af07e",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "rows": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "number",
+                                                        "example": "1"
+                                                    },
+                                                    "titulo": {
+                                                        "type": "string",
+                                                        "example": "Super Mario Bros."
+                                                    },
+                                                    "descripcion": {
+                                                        "type": "string",
+                                                        "example": "Un clásico de Nintendo"
+                                                    },
+                                                    "precio": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": 19.99
+                                                    },
+                                                    "id_desarrollador": {
+                                                        "type": "number",
+                                                        "example": 1
+                                                    },
+                                                    "categorias": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "number",
+                                                                    "example": "1"
+                                                                },
+                                                                "nombre": {
+                                                                    "type": "string",
+                                                                    "example": "Acción"
+                                                                },
+                                                                "descripcion": {
+                                                                    "type": "string",
+                                                                    "example": "Juegos de acción"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/juegos/{id}": {
+            "get": {
+                "tags": [
+                    "Juegos"
+                ],
+                "summary": "Mostrar la información de un juego",
+                "operationId": "97fb302f3365662153a5139255bbe53d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "titulo": {
+                                            "type": "string",
+                                            "example": "Super Mario Bros."
+                                        },
+                                        "descripcion": {
+                                            "type": "string",
+                                            "example": "Un juego clásico de plataformas"
+                                        },
+                                        "precio": {
+                                            "type": "number",
+                                            "example": 19.99
+                                        },
+                                        "id_desarrollador": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "categorias": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": "1"
+                                                    },
+                                                    "nombre": {
+                                                        "type": "string",
+                                                        "example": "Aventuras"
+                                                    },
+                                                    "descripcion": {
+                                                        "type": "string",
+                                                        "example": "Juegos de aventuras"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "El juego no existe",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "El juego no existe"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/usuarios/{id}/compras": {
+            "get": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Devuelve las compras realizadas por un usuario",
+                "operationId": "cea27edd79bb41966e66e9d21d3d9146",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del usuario",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Compras del usuario",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "description": "ID de la compra",
+                                                "type": "integer"
+                                            },
+                                            "fecha_compra": {
+                                                "description": "Fecha de la compra",
+                                                "type": "string",
+                                                "format": "date-time"
+                                            },
+                                            "juegos_comprados": {
+                                                "type": "array",
+                                                "items": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "description": "ID del juego",
+                                                            "type": "integer"
+                                                        },
+                                                        "titulo": {
+                                                            "description": "Título del juego",
+                                                            "type": "string"
+                                                        },
+                                                        "descripcion": {
+                                                            "description": "Descripción del juego",
+                                                            "type": "string"
+                                                        },
+                                                        "precio": {
+                                                            "description": "Precio del juego",
+                                                            "type": "number",
+                                                            "format": "float"
+                                                        },
+                                                        "desarrollador": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "description": "ID del desarrollador",
+                                                                    "type": "integer"
+                                                                },
+                                                                "nombre": {
+                                                                    "description": "Nombre del desarrollador",
+                                                                    "type": "string"
+                                                                },
+                                                                "descripcion": {
+                                                                    "description": "Descripción del desarrollador",
+                                                                    "type": "string"
+                                                                },
+                                                                "pais": {
+                                                                    "description": "País del desarrollador",
+                                                                    "type": "string"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Mensaje de error",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/usuarios": {
+            "post": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Registra un nuevo usuario.",
+                "operationId": "0c522654a256aec9dbabac920b0a6393",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nombre",
+                                    "email"
+                                ],
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string",
+                                        "maxLength": 15,
+                                        "example": "Juan"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "juan@mail.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuario registrado de forma exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "usuario registrado de forma exitosa"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Errores de validación",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "errors": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "El nombre no puede ser vacío."
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
